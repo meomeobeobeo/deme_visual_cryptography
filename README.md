@@ -1,10 +1,14 @@
 ## Two Step Encryption
 ### Introduction
-Applying Steganography followed by Visual Cryptography. Implementation based on the research paper titled **"Combine use of Steganography and Visual  Cryptography for Secured Data hiding in Computer Forensics"**
+Giới thiệu
 
-Steganography is the method of hiding secret data inside any form of digital media. The main idea behind steganography is to hide the existence of a data in any medium like audio, video, image etc.
+Áp dụng kỹ thuật Steganography, sau đó là Mật mã hình ảnh. Triển khai dựa trên bài nghiên cứu có tiêu đề "Combine use of Steganography and Visual Cryptography for Secured Data hiding in Computer Forensics"
 
-Visual cryptography is a cryptographic technique which allows visual information (pictures, text, etc.) to be encrypted in such a way that the decrypted information appears as a visual image.
+Steganography là phương pháp ẩn dữ liệu bí mật bên trong bất kỳ dạng phương tiện kỹ thuật số nào. Ý tưởng chính đằng sau kỹ thuật giấu tin là che giấu sự tồn tại của dữ liệu trong bất kỳ phương tiện nào như âm thanh, video, hình ảnh, v.v.
+
+Mật mã hình ảnh là một kỹ thuật mã hóa cho phép thông tin hình ảnh (hình ảnh, văn bản, v.v.) được mã hóa theo cách mà thông tin được giải mã xuất hiện dưới dạng hình ảnh trực quan.
+
+Ngành kiến ​​​​trúc
 
 ### Architecture
 ![image](https://i.imgur.com/nh0J1Sn.png)
@@ -60,13 +64,13 @@ if (pixels[-1] % 2 != 0):
 ##### Visual Cryptography
 ###### Generating shares
 ```python
-# Split image based on random factor
+#Tách hình ảnh dựa trên yếu tố ngẫu nhiên
 n = int(np.random.randint(data[i, j, k] + 1))
 img1[i, j, k] = n
 img2[i, j, k] = data[i, j, k] - n
 ```
 
-###### Compressing shares
+###### hợp nhất
 ```python
 img[i, j, k] = img1[i, j, k] + img2[i, j, k]
 ```
