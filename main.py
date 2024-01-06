@@ -7,13 +7,23 @@ import streamlit as st
 from PIL import Image
 from src.lsb_stegno import lsb_encode, lsb_decode
 from src.n_share import generate_shares, compress_shares
+import chardet
 
 menu = st.sidebar.radio('Options', ['Docs', 'Encode', 'Decode'])
 
+
 if menu == 'Docs':
     st.title('Documentation')
-    with open('README.md', 'r') as f:
+
+    # Detect the encoding of the file
+    with open('README.md', 'rb') as f:
+        result = chardet.detect(f.read())
+        encoding = result['encoding']
+
+    # Read the file using the detected encoding
+    with open('README.md', 'r', encoding=encoding) as f:
         docs = f.read()
+
     st.markdown(docs, unsafe_allow_html=True)
 
 elif menu == 'Encode':
@@ -50,6 +60,13 @@ elif menu == 'Encode':
             except FileNotFoundError:
                 os.remove('images/img.png')
             st.success('Data encoded, Shares generated in folder [images]')
+            image1 = Image.open("images/pic1.png")
+            image2 = Image.open("images/pic2.png")
+            # Display the images using Streamlit
+            st.image([image1, image2], caption=['Share1 image', 'Share2 image'], use_column_width=True)
+            
+
+        
 
 elif menu == 'Decode':
     st.title('Decoding')
@@ -69,7 +86,7 @@ elif menu == 'Decode':
         st.image(img2, caption='Share 2', use_column_width=True)
 
     # Decode message
-    if st.button('Compress shares and Decode message'):
+    if st.button('Hợp nhất 2 shares and giải mã thông điệp'):
 
         # Check
         if img1 is None or img2 is None:
@@ -81,4 +98,7 @@ elif menu == 'Decode':
             os.remove('images/share1.png')
             os.remove('images/share2.png')
             st.success('Decoded message: ' + lsb_decode('images/compress.png'))
-
+            
+            imageCompress = Image.open("images/compress.png")
+             # Display the images using Streamlit
+            st.image([imageCompress], caption=['Ảnh hợp nhất'], use_column_width=True)
